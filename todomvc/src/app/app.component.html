@@ -1,7 +1,7 @@
 <section class="todoapp">
   <header class="header">
     <h1>Todos</h1>
-    <input autofocus class="new-todo" type="text" placeholder="What needs to be done?">
+    <input autofocus class="new-todo" type="text" placeholder="What needs to be done?" [(ngModel)]="newTodoText" (keyup.enter)="addTodo()">
   </header>
   <section class="main" *ngIf="allItems.length > 0">
     <input class="toggle-all" id="toggle-all" type="checkbox" *ngIf="allItems.length" [checked]="remaining === 0" (click)="toggleAll()">
@@ -14,7 +14,7 @@
           <input class="toggle" type="checkbox" (click)="toggleCompletion(item)" [checked]="item.completed">
           <label>{{item.title}}</label>
           <!-- NOTE: Change to remove-todo -->
-          <button class="destroy"></button>
+          <button class="destroy" (click)="removeTodo(item)"></button>
         </div>
         <!-- NOTE: Change to edit-todo -->
         <!-- <input class="edit" type="text" placeholder="Exiting todo to edit"> -->

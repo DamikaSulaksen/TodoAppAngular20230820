@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +8,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'todomvc';
 
-  allItems = [
-    {
-      id: Date.now(),
-      title: 'Todo Item',
-      completed: false
-    }
-  ];
+  allItems: any[] = [];
+
+  @Input()
+  newTodoText = '';
 
   get items() {
       if (this.filter === 'all') {
@@ -44,5 +41,16 @@ export class AppComponent {
 
   removeCompleted() {
     this.allItems = this.allItems.filter(todo => !todo.completed);
+  }
+
+  addTodo() {
+    if (this.newTodoText.trim().length) {
+        this.allItems.push({ id: Date.now(), title: this.newTodoText, completed: false, editing: false });
+        this.newTodoText = '';
+    }
+  }
+
+  removeTodo(todo) {
+    this.allItems.splice(this.allItems.indexOf(todo), 1);
   }
 }
