@@ -6,19 +6,18 @@
   <section class="main" *ngIf="allItems.length > 0">
     <input class="toggle-all" id="toggle-all" type="checkbox" *ngIf="allItems.length" [checked]="remaining === 0" (click)="toggleAll()">
     <label for="toggle-all">Mark all as complete</label>
-    <ul class="todo-list">
-      <li class="todo-item" [class.completed]="item.completed" [class.editing]="item.editing" *ngFor="let item of items">
-        <!-- NOTE - change to view-todo -->
-        <div class="view">
-          <!-- NOTE - change to toggle-done -->
-          <input class="toggle" type="checkbox" (click)="toggleCompletion(item)" [checked]="item.completed">
-          <label (dblclick)="editTodo(item)">{{item.title}}</label>
-          <!-- NOTE: Change to remove-todo -->
-          <button class="destroy" (click)="removeTodo(item)"></button>
-        </div>
-        <!-- NOTE: Change to edit-todo -->
-        <input class="edit" *ngIf="item.editing" type="text" [(ngModel)]="editingTodoTitle" (keyup.enter)="updateEditingTodo(item)" (blur)="stopEditing(item)" (keyup.escape)="stopEditing(item)">
-      </li>
+    <ul class="todo-list" *ngFor="let item of items">
+      <app-item
+        [item]="item"
+        (toggleCompletionEvent)="toggleCompletion($event)"
+        (editTodoEvent)="editTodo($event)"
+        (removeTodoEvent)="removeTodo($event)"
+        (updateEditingTodoEvent)="updateEditingTodo($event)"
+        (stopEditingEvent)="stopEditing($event)"
+        [editingTodoTitle]="editingTodoTitle"
+        (editingTodoTitleChangeEvent)="updateEditingTodoTitle($event)"
+      >
+      </app-item>
     </ul>
   </section>
   <footer class="footer" *ngIf="allItems.length > 0">
